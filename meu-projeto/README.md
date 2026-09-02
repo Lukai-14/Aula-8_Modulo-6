@@ -1,16 +1,28 @@
-# React + Vite
+# Vitrine Alegre 🛒
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projeto de e-commerce desenvolvido em React para a disciplina de Desenvolvimento Front End II. A aplicação permite visualizar produtos, filtrar por categorias, pesquisar itens em tempo real, gerenciar um carrinho de compras com conversão de moedas e navegar entre páginas de forma dinâmica.
 
-Currently, two official plugins are available:
+## 🚀 Tecnologias Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React** (Vite)
+- **React Router DOM** (Navegação SPA e Rota 404)
+- **Context API** (Gerenciamento global do estado do carrinho)
+- **CSS Grid e Flexbox** (Layouts modernos e responsivos)
+- **Git** (Controle de versão)
 
-## React Compiler
+## 📌 Funcionalidades
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Vitrine de Produtos:** Listagem dinâmica consumindo dados de API externa.
+- **Filtros e Busca:** Busca instantânea por nome e filtro por categorias.
+- **Redirecionamento Inteligente:** A busca realizada no carrinho redireciona automaticamente para a Vitrine.
+- **Carrinho de Compras:** Adição, remoção, alteração de quantidade e cálculo de total em BRL (com cotação e desconto aplicados).
+- **Navegação:** Botão "Continuar comprando" no carrinho e tratamento para URLs inexistentes (Página 404).
+- **Layout Responsivo:** Adaptação completa para telas mobile e desktop.
+- **Tratamento de Erros:** Exibição de telas amigáveis para estados de carregamento, lista vazia e erro de rede.
 
-## Expanding the ESLint configuration
+## 💻 Como Rodar o Projeto
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clone o repositório ou baixe o código-fonte.
+2. No terminal, instale as dependências:
+   ```bash
+   npm install
