@@ -1,9 +1,21 @@
 import './Cabecalho.css';
 import { useCarrinho } from '../context/CarrinhoContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 export function Cabecalho({ busca, setBusca }) {
   const { totalItens } = useCarrinho();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleBuscaChange = (e) => {
+    const valor = e.target.value;
+    if (setBusca) setBusca(valor);
+
+    // Redireciona para a vitrine se o usuário digitar enquanto estiver no carrinho
+    if (location.pathname !== '/' && valor.trim() !== '') {
+      navigate('/');
+    }
+  };
 
   return (
     <header className="cabecalho">
@@ -19,7 +31,7 @@ export function Cabecalho({ busca, setBusca }) {
             placeholder="Buscar produtos..."
             className="campo-busca"
             value={busca || ''}
-            onChange={(e) => setBusca(e.target.value)}
+            onChange={handleBuscaChange}
           />
         </div>
 
