@@ -1,0 +1,71 @@
+:root {
+  /* Cores retiradas do Guia Visual */
+  --cor-primaria: #232A60;
+  --cor-primaria-escura: #171C42;
+  --cor-acao: #A6CE39;
+  --cor-fundo: #F4F5FA;
+  --cor-superficie: #FFFFFF;
+  --cor-borda: #E3E6EF;
+  --cor-texto: #2E2E2E;
+  --cor-texto-secundario: #687280;
+  --cor-alerta: #C2410C;
+  --cor-sucesso: #15803D;
+  --cor-avaliacao: #F59E0B;
+  --cor-avaliacao-vazia: #D8DBE4;
+
+  /* Tipografia */
+  --fonte-sistema: system-ui, -apple-system, sans-serif;
+}
+
+/* Reset básico e estilo do corpo */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-sistema);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 
+  Container centralizado da página
+  1200px de conteúdo com respiro nas laterais para telas grandes
+*/
+.container {
+  max-width: 1440px; /* 1200px + 120px de respiro de cada lado */
+  margin: 0 auto;
+  padding: 0 120px;
+}
+
+/* 
+  Grade de produtos com 4 colunas padrão e espaço de 24px
+*/
+.grade-produtos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 24px 0;
+}
+
+/* Responsividade: Tablet (2 colunas) e Mobile (1 coluna) */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 40px;
+  }
+  .grade-produtos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 16px;
+  }
+  .grade-produtos {
+    grid-template-columns: 1fr;
+  }
+}
