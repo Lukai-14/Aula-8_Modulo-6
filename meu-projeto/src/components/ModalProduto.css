@@ -1,0 +1,75 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .modal-conteudo {
+    background: #fff;
+    padding: 24px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .modal-fechar {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .modal-imagem {
+    width: 100%;
+    max-width: 220px;
+    max-height: 200px;
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+  }
+  
+  .modal-categoria {
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .modal-descricao {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.4;
+  }
+  
+  .modal-precos {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+  
+  .modal-precos .preco-antigo {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 14px;
+  }
+  
+  .modal-precos .preco-final {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2e7d32;
+  }

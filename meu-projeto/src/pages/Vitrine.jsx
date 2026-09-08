@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { CardProduto } from '../components/CardProduto';
 import { FiltroCategorias } from '../components/FiltroCategorias';
+import { ModalProduto } from '../components/ModalProduto';
 import { listarProdutos, listarCategorias } from '../services/api';
 
 export function Vitrine({ busca }) {
@@ -9,6 +10,7 @@ export function Vitrine({ busca }) {
   const [categoriaAtiva, setCategoriaAtiva] = useState('Todas');
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState(null);
+  const [produtoSelecionado, setProdutoSelecionado] = useState(null);
 
   useEffect(() => {
     listarCategorias()
@@ -56,10 +58,19 @@ export function Vitrine({ busca }) {
       {!carregando && !erro && produtos.length > 0 && (
         <div className="grade-produtos">
           {produtos.map((item) => (
-            <CardProduto key={item.id} produto={item} />
+            <CardProduto 
+              key={item.id} 
+              produto={item} 
+              onVerDetalhes={(p) => setProdutoSelecionado(p)} 
+            />
           ))}
         </div>
       )}
+
+      <ModalProduto 
+        produto={produtoSelecionado} 
+        onClose={() => setProdutoSelecionado(null)} 
+      />
     </div>
   );
 }
