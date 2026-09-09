@@ -63,13 +63,86 @@
   }
   
   .modal-precos .preco-antigo {
-    text-decoration: line-through;
-    color: #888;
+    text-decoration: line-through !important;
+    color: #888888 !important;
     font-size: 14px;
   }
   
   .modal-precos .preco-final {
     font-size: 20px;
     font-weight: bold;
-    color: #2e7d32;
+    color: #2e7d32 !important; /* Cor verde */
+  }
+  /* Caixa de aviso no Modal */
+.alerta-carrinho-quantidade {
+    background-color: #e8f5e9;
+    border: 1px solid #a5d6a7;
+    color: #1b5e20;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin: 6px 0;
+  }
+  
+  .alerta-carrinho-vazio {
+    background-color: #f5f5f5;
+    color: #757575;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin: 6px 0;
+  }
+
+  .secao-recomendados {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+  }
+  
+  .secao-recomendados h4 {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 8px;
+  }
+  
+  .grade-recomendados {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .card-recomendado {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f9f9f9;
+    padding: 8px;
+    border-radius: 6px;
+    flex: 1;
+  }
+  
+  .card-recomendado img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+  
+  .titulo-rec {
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 110px;
+  }
+  
+  .card-recomendado button {
+    background: #2e7d32;
+    color: #fff;
+    border: none;
+    padding: 3px 8px;
+    font-size: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
   }

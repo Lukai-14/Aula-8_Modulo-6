@@ -67,10 +67,11 @@ export function Vitrine({ busca }) {
         </div>
       )}
 
-      <ModalProduto 
-        produto={produtoSelecionado} 
-        onClose={() => setProdutoSelecionado(null)} 
-      />
+<ModalProduto 
+  produto={produtoSelecionado} 
+  todosProdutos={produtos}
+  onClose={() => setProdutoSelecionado(null)} 
+/>
     </div>
   );
 }
