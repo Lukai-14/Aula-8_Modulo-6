@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Página do Carrinho - Design Moderno
+   Página do Carrinho - Design Moderno & Responsivo
    ========================================================================== */
 
    .carrinho-pagina {
@@ -43,18 +43,12 @@
     text-decoration: underline;
   }
   
-  /* Layout em Grid (2 Colunas) */
+  /* Layout em Grid (2 Colunas para Desktop/Tablet) */
   .carrinho-grid {
     display: grid;
     grid-template-columns: 1fr 340px;
     gap: 32px;
     align-items: start;
-  }
-  
-  @media (max-width: 900px) {
-    .carrinho-grid {
-      grid-template-columns: 1fr;
-    }
   }
   
   /* ==========================================================================
@@ -209,10 +203,7 @@
     background: #fee2e2;
   }
   
-  /* ==========================================================================
-     Resumo do Pedido (Coluna Direita)
-     ========================================================================== */
-  
+  /* Resumo do Pedido */
   .carrinho-coluna-resumo {
     position: sticky;
     top: 24px;
@@ -297,10 +288,7 @@
     margin-bottom: 0;
   }
   
-  /* ==========================================================================
-     Seção de Recomendados no Carrinho
-     ========================================================================== */
-  
+  /* Sugestões */
   .secao-sugestoes {
     margin-top: 40px;
     padding-top: 24px;
@@ -316,7 +304,7 @@
   
   .grid-sugestoes {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 16px;
   }
   
@@ -373,10 +361,7 @@
     border-color: #2e7d32;
   }
   
-  /* ==========================================================================
-     Estado Vazio
-     ========================================================================== */
-  
+  /* Estado Vazio */
   .carrinho-vazio-container {
     display: flex;
     justify-content: center;
@@ -424,4 +409,56 @@
   
   .btn-voltar-vitrine:hover {
     background: #1b5e20;
+  }
+  
+  /* ==========================================================================
+     REGRAS DE RESPONSIVIDADE (MOBILE & TABLET)
+     ========================================================================== */
+  
+  @media (max-width: 900px) {
+    .carrinho-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .carrinho-coluna-resumo {
+      position: static;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .carrinho-cabecalho {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  
+    .card-item-carrinho {
+      grid-template-columns: 70px 1fr;
+      gap: 12px;
+      position: relative;
+    }
+  
+    .item-imagem-container {
+      width: 70px;
+      height: 70px;
+    }
+  
+    .item-acoes {
+      grid-column: 1 / -1;
+      justify-content: space-between;
+      width: 100%;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed #e2e8f0;
+    }
+  
+    .btn-remover-item {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+  
+    .grid-sugestoes {
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    }
   }

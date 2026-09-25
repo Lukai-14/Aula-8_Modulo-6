@@ -5,53 +5,68 @@ Relatar as decisões técnicas, a resolução de problemas e o aprendizado obtid
 
 ## Principais Decisões de Arquitetura
 1. **Centralização do Estado com Context API:** Para evitar o compartilhamento manual de propriedades entre múltiplos níveis de componentes, o `CarrinhoContext` foi mantido para gerenciar os produtos selecionados, persistência no `localStorage` e cálculo do total.
-2. **Tratamento de Erros de Execução:** Durante a refatoração, erros de importação geraram falhas no React. A IA auxiliou no diagnóstico via Console do Navegador (F12) e na identificação rápida de incoerências entre exportações padrão e nomeadas.
-3. **Controle de Versão Seguro (Git):** O uso de commits frequentes (`git add .` e `git commit`) foi adotado como boa prática para garatir pontos de restauração estáveis antes de realizar alterações complexas no código.
+2. **Arquitetura de Rotas Dinâmicas (`react-router-dom`):** Substituição do fluxo baseado em Modais por rotas dedicadas (`/product/:id`), garantindo URLs legíveis, navegação via histórico do navegador e melhor separação de responsabilidades.
+3. **Valorização do Fluxo de Detalhes:** Remoção da ação direta de adicionar ao carrinho na vitrine, convertendo os cards em pontos de entrada para a página `/product/:id`, onde o usuário pode ler avaliações, ver recomendados e escolher suas ações.
+4. **Tratamento de Erros e Feedback Visual:** Implementação de tratamento defensivo de erros ao consumir a API externa, exibindo avisos amigáveis em vez de quebrar a interface do usuário.
+5. **Controle de Versão Seguro (Git):** O uso de commits frequentes (`git add .` e `git commit`) foi adotado como boa prática para garantir pontos de restauração estáveis antes de realizar alterações complexas no código.
 
 ## Desafios Resolvidos
-- **Sobreposição no Mobile:** Ajuste de dimensões fixas no cabeçalho CSS para garantir a acessibilidade e usabilidade em telas pequenas.
-- **Roteamento Dinâmico:** Implementação de regras de navegação no `Cabecalho` permitindo que a pesquisa de produtos funcione perfeitamente de qualquer página da aplicação.
-- **Erros de Conexão:** Validação de que a falha ao carregar dados da API exibe uma mensagem amigável ao usuário em vez de quebrar a interface.
-
-## Semana do dia 17/09 a 24/09
-
-# Diário de Uso de Inteligência Artificial — Vitrine Alegre
-
-Este documento registra os principais problemas, erros de build/deploy e desafios de arquitetura enfrentados durante o desenvolvimento do projeto **Vitrine Alegre**, acompanhados das respectivas soluções aplicadas com auxílio da IA.
+- **Sobreposição no Mobile:** Ajuste de dimensões no cabeçalho e estilização responsiva para garantir acessibilidade em telas pequenas.
+- **Roteamento Dinâmico:** Implementação de regras de navegação no `Cabecalho` permitindo que a pesquisa de produtos funcione de qualquer página da aplicação.
+- **Compactação e Otimização Visual:** Refatoração de CSS para travar o tamanho desproporcional de imagens e organizar os cards em 2 colunas no mobile.
+- **Recursos Avançados de E-Commerce:** Integração de botões para compra rápida ("Comprar Agora"), remoção de itens na tela de detalhes e compartilhamento nativo para WhatsApp e área de transferência.
 
 ---
 
-## Registros de Erros e Soluções
+# Registros Históricos e Evolução do Projeto
+
+## Registros Anteriores (Semana de 17/09 a 24/09)
 
 ### Registro 1: Erro 404 (NOT_FOUND) ao recarregar a página na Vercel
 * **Problema:** Ao navegar para rotas como `/carrinho` ou `/produto/:id` e recarregar a página (F5) na Vercel, o servidor retornava erro `404: NOT_FOUND`.
 * **Causa:** Por se tratar de uma Single Page Application (SPA) construída com React Router, a Vercel tentava buscar um arquivo físico no caminho da URL que não existia no servidor.
 * **Solução:** Criação do arquivo `vercel.json` na raiz do projeto com a regra de reescrita (*rewrites*) redirecionando todas as requisições `/(.*)` para o `/index.html`.
 
----
-
 ### Registro 2: Estrutura de pastas aninhadas no repositório Git
 * **Problema:** O código do React e os arquivos de documentação estavam divididos dentro de uma subpasta (`meu-projeto`) dentro da pasta principal (`Aula-8_Modulo 6`).
 * **Causa:** O repositório Git foi inicializado na pasta pai em vez da pasta raiz do projeto React.
-* **Solução:** Movel-se todos os arquivos do React (`src/`, `public/`, `package.json`, etc.) diretamente para a raiz do repositório, garantindo conformidade com a estrutura exigida pelo professor.
-
----
+* **Solução:** Moveram-se todos os arquivos do React (`src/`, `public/`, `package.json`, etc.) diretamente para a raiz do repositório, garantindo conformidade com a estrutura exigida pelo professor.
 
 ### Registro 3: Apontamento incorreto do *Root Directory* na Vercel
 * **Problema:** A Vercel falhava na compilação ou não encontrava os scripts do `package.json` após a reorganização das pastas.
 * **Causa:** O painel da Vercel estava configurado para buscar o build dentro do diretório `/meu-projeto`, que havia sido eliminado.
 * **Solução:** Acesso às configurações do projeto na Vercel (`Settings -> Build and Deployment`) e limpeza do campo **Root Directory** para apontar diretamente para a raiz.
 
----
-
 ### Registro 4: Duplicidade de arquivos de documentação e artefatos de backup
 * **Problema:** Existiam arquivos `.md` e backups zipados espalhados tanto na raiz quanto dentro de subpastas do projeto.
 * **Causa:** Acúmulo de arquivos gerados em etapas anteriores da aula.
 * **Solução:** Comparação das versões mais atualizadas do `README.md`, `PROMPTS.md` e `DIARIO-DA-IA.md`, consolidação dos dados na raiz e remoção dos arquivos duplicados e backups `.zip`.
 
----
-
 ### Registro 5: Erro de *Staged Changes* no Git ao realizar o Commit pelo VS Code
 * **Problema:** Ao tentar fazer o commit após mover os arquivos de pasta, o VS Code exibia a mensagem *"There are no staged changes to commit"*.
 * **Causa:** As alterações e exclusões massivas de arquivos precisavam ser adicionadas ao estágio de preparação (*stage*) do Git.
 * **Solução:** Confirmação do diálogo do VS Code para incluir automaticamente todas as alterações no *stage* (`git add .`) antes da execução do `git commit` e `git push`.
+
+---
+
+## Registros Atuais (Refinamento Final & UX)
+
+### Registro 6: Migração do Modal de Detalhes para Rota Dedicada (`/product/:id`)
+* **Problema:** O visualização de produto via Modal limitava a experiência do usuário, impedindo o compartilhamento de links diretos de produtos e poluindo o estado da página principal.
+* **Causa:** O projeto dependia de um estado local `produtoSelecionado` que abria uma janela sobreposta.
+* **Solução:** Criação da página `DetalheProduto.jsx` com o hook `useParams` para extrair o `id` da URL e realizar requisições diretas à API. Separação dos estilos em `DetalheProduto.css`.
+
+### Registro 7: Sistema Interativo de Avaliações e Recomendados
+* **Problema:** A página do produto precisava oferecer maior nível de detalhes, engajamento e recursos comuns em plataformas profissionais de e-commerce.
+* **Causa:** Ausência de seções de feedback social e de cross-selling.
+* **Solução:** Leitura da propriedade `reviews` da DummyJSON para exibir avaliações reais e criação de formulário no estado local para inserção de novos comentários na hora. Adição de requisição secundária por categoria para renderizar produtos recomendados.
+
+### Registro 8: Otimização de Layout, Cards Compactos e Cabeçalho
+* **Problema:** As imagens dos cards estavam ocupando espaço excessivo na tela, e a palavra "Carrinho" poluía o cabeçalho em visualizações reduzidas.
+* **Causa:** Falta de restrições rígidas de altura no CSS e ausência de um design system compacto para mobile.
+* **Solução:** Aplicação de `max-height` e `object-fit: contain` nas imagens dos produtos, reestruturação da Vitrine para 2 colunas no mobile e transformação do botão do carrinho em um ícone circular `🛒` com *badge* indicativo de quantidade.
+
+### Registro 9: Aprimoramento das Ações de Compra e Compartilhamento Social
+* **Problema:** O fluxo de navegação exigia que o usuário adicionasse o produto ao carrinho na vitrine sem ver suas especificações, e não havia opção de compra rápida ou compartilhamento.
+* **Causa:** Arquitetura antiga focada apenas em botões simples de incremento no card.
+* **Solução:** Remoção do botão de adição na vitrine para direcionar a navegação aos detalhes. Implementação da ação "⚡ Comprar Agora" (inclusão direta e redirecionamento para `/carrinho`), remoção contextual de itens e compartilhamento integrado via API do WhatsApp e `navigator.clipboard`.

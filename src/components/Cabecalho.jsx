@@ -1,48 +1,43 @@
-import './Cabecalho.css';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCarrinho } from '../context/CarrinhoContext';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import './Cabecalho.css';
 
 export function Cabecalho({ busca, setBusca }) {
-  const { totalItens } = useCarrinho();
   const navigate = useNavigate();
-  const location = useLocation();
+  const { itens } = useCarrinho();
 
-  const handleBuscaChange = (e) => {
-    const valor = e.target.value;
-    if (setBusca) setBusca(valor);
-
-    // Redireciona para a vitrine se o usuário digitar enquanto estiver no carrinho
-    if (location.pathname !== '/' && valor.trim() !== '') {
-      navigate('/');
-    }
-  };
+  const quantidadeTotal = itens ? itens.reduce((acc, item) => acc + item.quantidade, 0) : 0;
 
   return (
     <header className="cabecalho">
-      <div className="container cabecalho-conteudo">
-        <Link to="/" className="logo" style={{ textDecoration: 'none' }}>
-          <span className="logo-icone">V</span>
+      <div className="cabecalho-conteudo">
+        <Link to="/" className="logo">
+          <span className="logo-icone">VA</span>
           <h1>Vitrine <span>Alegre</span></h1>
         </Link>
 
         <div className="busca-container">
           <input
             type="text"
-            placeholder="Buscar produtos..."
             className="campo-busca"
-            value={busca || ''}
-            onChange={handleBuscaChange}
+            placeholder="Buscar produtos..."
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
           />
         </div>
 
         <div className="acoes-cabecalho">
-          <button className="btn-entrar">Entrar</button>
-          <Link to="/carrinho" className="btn-carrinho" style={{ textDecoration: 'none' }}>
-            🛒 Carrinho
-            {totalItens > 0 && (
-              <span className="contador-carrinho">{totalItens}</span>
+          <button 
+            className="btn-carrinho-icone" 
+            onClick={() => navigate('/carrinho')}
+            title="Ver Carrinho"
+            aria-label="Ver Carrinho"
+          >
+            🛒
+            {quantidadeTotal > 0 && (
+              <span className="badge-contador">{quantidadeTotal}</span>
             )}
-          </Link>
+          </button>
         </div>
       </div>
     </header>

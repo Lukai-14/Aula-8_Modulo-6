@@ -1,12 +1,11 @@
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCarrinho } from '../context/CarrinhoContext';
 import './CardProduto.css';
 
-export function CardProduto({ produto, onVerDetalhes }) {
-  const { itens, adicionarAoCarrinho } = useCarrinho();
-  const [mensagem, setMensagem] = useState('');
+export function CardProduto({ produto }) {
+  const navigate = useNavigate();
+  const { itens } = useCarrinho();
 
-  // Busca na lista 'itens' exportada pelo CarrinhoContext
   const itemNoCarrinho = itens?.find((item) => String(item.id) === String(produto.id));
   const quantidadeNoCarrinho = itemNoCarrinho ? itemNoCarrinho.quantidade : 0;
 
@@ -19,21 +18,21 @@ export function CardProduto({ produto, onVerDetalhes }) {
   const formatarMoeda = (valor) =>
     new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
 
-  const handleAdicionar = (e) => {
-    e.stopPropagation();
-    adicionarAoCarrinho(produto);
-    
-    setMensagem('Item adicionado!');
-    setTimeout(() => setMensagem(''), 2000);
+  const handleVerDetalhes = () => {
+    if (produto?.id) {
+      navigate(`/product/${produto.id}`);
+    }
   };
 
   return (
-    <div className={`card-produto ${quantidadeNoCarrinho > 0 ? 'card-selecionado' : ''}`}>
-      {mensagem && <div className="toast-aviso">{mensagem}</div>}
-
+    <div 
+      className={`card-produto ${quantidadeNoCarrinho > 0 ? 'card-selecionado' : ''}`}
+      onClick={handleVerDetalhes}
+      style={{ cursor: 'pointer' }}
+    >
       {quantidadeNoCarrinho > 0 && (
         <div className="badge-quantidade-carrinho">
-          🛒 {quantidadeNoCarrinho} {quantidadeNoCarrinho === 1 ? 'unidade no carrinho' : 'unidades no carrinho'}
+          🛒 {quantidadeNoCarrinho} no carrinho
         </div>
       )}
 
@@ -45,17 +44,11 @@ export function CardProduto({ produto, onVerDetalhes }) {
         src={produto.thumbnail || produto.image} 
         alt={produto.title} 
         className="card-imagem" 
-        onClick={() => onVerDetalhes && onVerDetalhes(produto)}
-        style={{ cursor: 'pointer' }}
       />
       
       <span className="card-categoria">{produto.category}</span>
       
-      <h3 
-        className="card-titulo" 
-        onClick={() => onVerDetalhes && onVerDetalhes(produto)}
-        style={{ cursor: 'pointer' }}
-      >
+      <h3 className="card-titulo">
         {produto.title}
       </h3>
       
@@ -65,13 +58,10 @@ export function CardProduto({ produto, onVerDetalhes }) {
         )}
         <span className="preco-final">{formatarMoeda(precoComDesconto)}</span>
       </div>
-      
-      <button 
-  className="btn-adicionar"
-  onClick={handleAdicionar}
->
-  {quantidadeNoCarrinho > 0 ? 'Adicionar (+1)' : 'Adicionar ao Carrinho'}
-</button>
+
+      <button className="btn-ver-detalhes">
+        Ver Detalhes →
+      </button>
     </div>
   );
 }
