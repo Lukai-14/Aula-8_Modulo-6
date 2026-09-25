@@ -70,3 +70,47 @@ Relatar as decisões técnicas, a resolução de problemas e o aprendizado obtid
 * **Problema:** O fluxo de navegação exigia que o usuário adicionasse o produto ao carrinho na vitrine sem ver suas especificações, e não havia opção de compra rápida ou compartilhamento.
 * **Causa:** Arquitetura antiga focada apenas em botões simples de incremento no card.
 * **Solução:** Remoção do botão de adição na vitrine para direcionar a navegação aos detalhes. Implementação da ação "⚡ Comprar Agora" (inclusão direta e redirecionamento para `/carrinho`), remoção contextual de itens e compartilhamento integrado via API do WhatsApp e `navigator.clipboard`.
+
+
+
+# Os 5 principais erros reais de código e arquitetura gerados pela Inteligência Artificial durante o desenvolvimento.
+
+---
+
+## 1. Erro de Exportação em Componente (Import/Export Mismatch)
+* **Erro da IA:** A IA gerou o componente `CardProduto.jsx` com exportação padrão (`export default`), mas instanciou a importação no arquivo `Vitrine.jsx` com importação nomeada `{ CardProduto }`.
+* **Sintoma:** Tela branca na aplicação com o erro `Uncaught SyntaxError: The requested module does not provide an export named 'CardProduto'`.
+* **Diagnóstico:** Incompatibilidade entre a declaração da função e a forma de importação no arquivo pai.
+* **Correção:** Padronização de todos os componentes do projeto para utilização de exportações nomeadas (`export function NomeComponente`).
+
+---
+
+## 2. Erro de Layout Mobile por Falta de Box-Sizing e Reset Global
+* **Erro da IA:** Ao gerar as regras de CSS para o cabeçalho e carrinho, a IA definiu larguras fixas em pixels (`width: 340px`, `height: 76px`) sem aplicar o reset do CSS Grid/Flexbox e `box-sizing: border-box`.
+* **Sintoma:** Elementos do cabeçalho cobrindo os filtros de categoria e criação de barra de rolagem horizontal desproporcional em telas de celular.
+* **Diagnóstico:** Ausência de propriedades flexíveis e falta de tratamento de estouro de tela (`overflow-x: hidden`).
+* **Correção:** Implementação de regras globais em `index.css` com `box-sizing: border-box`, `flex-wrap: wrap` no cabeçalho e `grid-template-columns: repeat(2, 1fr)` para celulares.
+
+---
+
+## 3. Imagens Desproporcionais e Quebra do Grid de Recomendados
+* **Erro da IA:** Na primeira versão da tela de detalhes (`DetalheProduto.jsx`), a IA renderizou as imagens dos produtos recomendados sem limitação de altura e sem a propriedade `object-fit`.
+* **Sintoma:** Os cards de recomendações ocupavam quase a tela inteira, empurrando a área de avaliações para o final e distorcendo a proporção original das imagens da API.
+* **Diagnóstico:** Falta de trava de dimensões máximas nas imagens descendentes dos cards recomendados.
+* **Correção:** Ajuste no CSS (`DetalheProduto.css`) adicionando `height: 80px` e `object-fit: contain` nas imagens dos cards secundários, compactando a grade.
+
+---
+
+## 4. Perda de Estado do Carrinho ao Recarregar a Página (F5)
+* **Erro da IA:** A estrutura inicial do `CarrinhoContext` proposta pela IA mantinha os produtos selecionados apenas em um estado do React (`useState([])`).
+* **Sintoma:** Sempre que o usuário atualizava a página (`F5`), o carrinho era completamente zerado.
+* **Diagnóstico:** Ausência de sincronização do estado global com o armazenamento persistente do navegador.
+* **Correção:** Adição de leitura inicial do `localStorage` no `useState` do contexto e uso do hook `useEffect` para salvar o carrinho automaticamente a cada alteração.
+
+---
+
+## 5. Erro 404 ao Recarregar Rotas Dinâmicas no Servidor da Vercel
+* **Erro da IA:** A IA configurou as rotas no React Router (`/product/:id` e `/carrinho`), mas não incluiu o arquivo de suporte para servidores de hospedagem estática.
+* **Sintoma:** Ao recarregar a página (F5) estando na rota de um produto na Vercel, o navegador exibia a página de erro `404: NOT_FOUND`.
+* **Diagnóstico:** Em Single Page Applications (SPAs), o servidor web tenta procurar uma pasta/arquivo físico no caminho da URL que não existe no disco.
+* **Correção:** Criação do arquivo `vercel.json` na raiz do projeto com regra de reescrita (*rewrites*) direcionando todas as rotas para o `/index.html`.

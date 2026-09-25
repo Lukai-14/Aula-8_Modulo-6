@@ -212,7 +212,7 @@
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    justify: space-between;
+    justify-content: space-between;
     background-color: #fafafa;
   }
   

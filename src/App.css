@@ -44,7 +44,7 @@
   .card-produto {
     display: flex;
     flex-direction: column;
-    justify: space-between;
+    justify-content: space-between;
     padding: 12px !important;
   }
   
